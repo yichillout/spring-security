@@ -9,6 +9,7 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.jasper.dto.User;
 import com.jasper.dto.UserQueryCondition;
@@ -37,6 +38,11 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+	@GetMapping("/me")
+	public Object getCurrentUser(@AuthenticationPrincipal UserDetails user) {
+		return user;
+	}
 
 	// @RequestMapping(value = "/user", method = RequestMethod.GET)
 	@GetMapping
