@@ -9,8 +9,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.jasper.security.core.properties.SecurityProperties;
+import com.jasper.security.core.validate.code.ValidateCodeFilter;
 
 /**
  * 
@@ -36,8 +38,12 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
+		ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
+		validateCodeFilter.setAuthenticationFailureHandler(SecurityDemoAuthenctiationFailureHandler);
 
-		http.formLogin() 
+		http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+			.formLogin() 
 			.loginPage("/authentication/require")
 			.loginProcessingUrl("/authentication/form")
 			.successHandler(SecurityDemoAuthenticationSuccessHandler)
