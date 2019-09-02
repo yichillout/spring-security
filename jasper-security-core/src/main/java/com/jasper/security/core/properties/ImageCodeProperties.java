@@ -8,6 +8,8 @@ public class ImageCodeProperties {
 	private int validateCodeLength = 4;
 	private int expiredTime = 60;
 
+	private String url;
+
 	public int getWidth() {
 		return width;
 	}
@@ -38,6 +40,14 @@ public class ImageCodeProperties {
 
 	public void setExpiredTime(int expiredTime) {
 		this.expiredTime = expiredTime;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 }
